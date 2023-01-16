@@ -2,13 +2,14 @@ import React from 'react';
 import {useState, useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../images/Logo.jpg"
-import {Container} from "react-bootstrap";
+import {Button, Card, Container, ListGroup} from "react-bootstrap";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from "react-router-dom/es/Link";
 import axios, * as others from 'axios';
 import back from "../images/back.png"
-
+import data from "bootstrap/js/src/dom/data";
+import './../App.css'
 // import {useHistory, useParams, Link} from "react-router-dom";
 
 function Home() {
@@ -38,16 +39,13 @@ function Home() {
         }
     }
     return (
+        <container >
 
-        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+        <div className="d-grid gap-2 d-md-flex justify-content-md-end home">
             <Link to="/">
             <button className="btn btn-outline-light me-md-2 btn-lg" type="button">Intro Page </button>
             </Link>
-        <div style={{
-            position: "absolute",
-            top: "170px",
-            right: "600px",
-        }}>
+        <div>
             <center>
                 <Link to="Create">
                     <button type="button" className="btn btn-outline-light btn-lg">Add New Task To The List
@@ -55,39 +53,24 @@ function Home() {
                 </Link>
             </center>
             &nbsp;
-            <table className="styled-table">
+           {/*<div>{TodoList()}</div>*/}
+            <table className="table-wrapper">
                 <thead>
                 &nbsp;
                 <tr>
-                    <th style={{
-                        fontSize:20,
-                        textAlign: "center",
-                        color: "white"
-                    }}>Task Number
-                    </th>
-                    <th style={{
-                        fontSize:20,
-                        textAlign: "center",
-                        color: "white"
-                    }}>Task Name
-                    </th>
-                    <th style={{
-                        fontSize:20,
-                        textAlign: "center",
-                        color: "white"
-                    }}>Action
-                    </th>
+                    <th >Task Number</th>
+                    <th >Task Name</th>
+                    <th >Action</th>
                 </tr>
                 </thead>
-                &nbsp;
-                <tbody style={{color: "white",
-                    fontSize:20,
-                }}>
+                <br/>
+                <tbody >
                 {toDo.map((item, index) => {
                     return (
                         <tr key={item.id}>
                             <th scope="row">{index + 1}</th>
                             <td>{item.task_name}</td>
+                            <td>{item.task_desc}</td>
                             &nbsp;
                             <td>
                                 <button type="button" className="btn btn-outline-danger" onClick={() => {
@@ -95,8 +78,6 @@ function Home() {
                                     window.location.reload()
                                 }}>Delete
                                 </button>
-                                &nbsp;
-
                                 <Link to="/Update">
                                     <button type="button" className="btn btn-outline-primary">Update</button>
                                 </Link>
@@ -106,8 +87,11 @@ function Home() {
                 })}
                 </tbody>
             </table>
+
         </div>
+
         </div>
+        </container>
 
     );
 }
