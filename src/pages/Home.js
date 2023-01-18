@@ -91,7 +91,7 @@ function Home() {
                                         <td>
                                             <ul className="list-inline m-0">
                                                 <li className="list-inline-item">
-                                                    <button type="button" className="btn btn-primary">Primary
+                                                    <button type="button" className="btn btn-primary">Edit
                                                     </button>
                                                 </li>
                                                 <li className="list-inline-item">
