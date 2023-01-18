@@ -10,28 +10,37 @@ import axios, * as others from 'axios';
 import back from "../images/back.png"
 import data from "bootstrap/js/src/dom/data";
 import './../App.css'
-// import {useHistory, useParams, Link} from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
 
 function Home() {
-    // useEffect(() => {
-    //     toast.success("Add Tasks")
-    //     toast.error("Delete A Task ")
-    //     toast.warn("Update Task")
-    //     setTimeout(() => {
-    //         console.log("this is the first message")
-    //     }, 5000);
-    //
-    //     }, [1]);
-    const [toDo, setToDo] = useState([{}])
-    useEffect(() => {
-        fetch("http://localhost:5000/tasks_db")
-            .then((response) => response.json())
-            .then((data) => {
-                setToDo(data);
-                console.log(data);
-            });
-    }, []);
 
+    const [toDo, setToDo] = useState([{}])
+    const [isPending, setIsPending] = useState(true)
+    const [error, setError] = useState(null)
+
+    // "http://localhost:5000/tasks_db"
+    useEffect(() => {
+        setTimeout(() => {
+            fetch("http://localhost:5000/tasks_db")
+                .then(res => {
+                    if (!res.ok) {
+                        throw Error("The server is taking a nap")
+                    }
+                    return res.json()
+                })
+                .then(data => {
+                    setToDo(data)
+                    console.log(data)
+                    setIsPending(false)
+                    setError(null)
+                })
+                .catch(err => {
+                    setError(err.message)
+                    setIsPending(false)
+                })
+        }, 1000)
+    }, [])
     const deleteTask = (id) => {
         console.log(id);
         if (window.confirm("Are you sure you want to Delete the Task")) {
@@ -39,61 +48,72 @@ function Home() {
         }
     }
     return (
-        <container >
-
-        <div className="d-grid gap-2 d-md-flex justify-content-md-end home">
-            <Link to="/">
-            <button className="btn btn-outline-light me-md-2 btn-lg" type="button">Intro Page </button>
-            </Link>
-        <div>
-            <center>
-                <Link to="Create">
-                    <button type="button" className="btn btn-outline-light btn-lg">Add New Task To The List
-                    </button>
-                </Link>
-            </center>
-            &nbsp;
-           {/*<div>{TodoList()}</div>*/}
-            <table className="table-wrapper">
-                <thead>
+        <container>
+            <Header/>
+            <div>
+                {isPending &&
+                    <h1>IT Is Just Loading .....</h1>}
                 &nbsp;
-                <tr>
-                    <th >Task Number</th>
-                    <th >Task Name</th>
-                    <th >Action</th>
-                </tr>
-                </thead>
-                <br/>
-                <tbody >
-                {toDo.map((item, index) => {
-                    return (
-                        <tr key={item.id}>
-                            <th scope="row">{index + 1}</th>
-                            <td>{item.task_name}</td>
-                            <td>{item.task_desc}</td>
-                            &nbsp;
-                            <td>
-                                <button type="button" className="btn btn-outline-danger" onClick={() => {
-                                    deleteTask(item.task_id);
-                                    window.location.reload()
-                                }}>Delete
-                                </button>
-                                <Link to="/Update">
-                                    <button type="button" className="btn btn-outline-primary">Update</button>
-                                </Link>
-                            </td>
-                        </tr>
-                    )
-                })}
-                </tbody>
-            </table>
+                {error && <h4>{error}</h4>}
 
-        </div>
+                {!error && !isPending && <div>
+                    &nbsp;
+                    <h1>Welcome to my To Do List</h1>
+                    <h1><span className="underlined underline-clip">Add</span> &nbsp;
+                        <span className="underlined underline-mask">Edit </span>
+                        <span className="underlined underline-overflow"> Delete </span></h1>
+                    &nbsp;
+                    <div>
+                        <Link to="/">
+                            <button type="button" className="btn btn-warning">Go Back</button>
+                        </Link>
+                        &nbsp;
+                        <Link to="Create">
+                            <button type="button" className="btn btn-success">Add Task</button>
+                        </Link></div>
 
-        </div>
+
+                    <div className="table-title">
+
+                        &nbsp;
+                        <table className="table-fill">
+                            <thead>
+                            <tr>
+                                <th className="text-left">Task Description</th>
+                                <th className="text-left">Action</th>
+                            </tr>
+                            </thead>
+                            {toDo.map((item, i) => {
+                                return (
+                                    <tbody className="text-left">
+                                    <tr>
+                                        <td>{item.task_name}</td>
+                                        <td>
+                                            <ul className="list-inline m-0">
+                                                <li className="list-inline-item">
+                                                    <button type="button" className="btn btn-primary">Primary
+                                                    </button>
+                                                </li>
+                                                <li className="list-inline-item">
+                                                    <button type="button" className="btn btn-danger" onClick={() => {
+                                                        deleteTask(item.task_id);
+                                                        window.location.reload()
+                                                    }}>Delete
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                )
+                            })}
+                        </table>
+                    </div>
+                </div>}
+            </div>
+            <Footer/>
         </container>
-
-    );
+    )
 }
 
 export default Home;

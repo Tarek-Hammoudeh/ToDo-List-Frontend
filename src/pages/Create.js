@@ -7,6 +7,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios, * as others from 'axios';
 import {useHistory, useParams, Link} from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
 
 function Create() {
     const [task, setTask] = useState([])
@@ -18,12 +20,9 @@ function Create() {
         });
     };
     return (
+        <Container>
         <div>
-        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-            <Link to="/">
-                <button className="btn btn-outline-light me-md-2 btn-lg" type="button">Intro Page </button>
-            </Link>
-        </div>
+        <Header/>
         <center>
             <Container>
                 <ToastContainer></ToastContainer>
@@ -63,6 +62,8 @@ function Create() {
 
         </center>
         </div>
+            <Footer/>
+        </Container>
     )
 }
 

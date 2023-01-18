@@ -7,6 +7,7 @@ import Update from "./pages/Update";
 import Delete from "./pages/Delete";
 import Create from "./pages/Create";
 import Intro from "./pages/Intro";
+import Header from "./pages/Header";
 
 function App() {
     return (
@@ -21,8 +22,6 @@ function App() {
                 </Switch>
             </div>
         </Router>
-
     );
 }
-
 export default App;

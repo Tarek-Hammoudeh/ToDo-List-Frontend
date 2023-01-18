@@ -6,45 +6,32 @@ import {Container} from "react-bootstrap";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from "react-router-dom/es/Link";
+import Header from "./Header";
+import Navbar from "./Header";
+import Footer from "./Footer";
 // import bgImage from "../Videos/chapter one.mp4"
 function Intro() {
     return (
+        <Container>
+
+        <div>
+        <Navbar/>
         <center>
-            <Container>
-                {/*<video autoPlay loop muted style={{*/}
-                {/*    position:"absolute",*/}
-                {/*   zIndex:-1,*/}
-                {/*    top:0,*/}
-                {/*    left:0,*/}
-                {/*    width:"100%",*/}
-                {/*    height:"100hv"*/}
-                {/*}}>*/}
-                {/*    <source src={bgImage} type="video/mp4"/>*/}
-                {/*</video>*/}
-                <ToastContainer/>
-                <div style={{
-                    position: "absolute",
-                    top: "200px",
-                    right: "100px"
-                }}>
+                <div >
                     <h1>                    To Do App
                     </h1>
                 </div>
-                <div style={{
-                    position: "absolute",
-                    top: "300px",
-                    right: "200px"
-                }}>
+                <div >
                     <Link to="/Home">
-                        <button type="button" className="btn btn-secondary btn-lg">Let's Do It </button>
+                        <button type="button" className="btn btn-outline-light btn-lg">let's Start</button>
 
                     </Link>
                 </div>
-            </Container>
 
         </center>
-
+        </div>
+            <Footer/>
+        </Container>
     );
 }
-
 export default Intro;
